@@ -3,13 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
+    "@mui/material": "^5.15.15",
+    "@mui/styles": "^5.15.15",
+    "@mui/system": "^5.15.15",
+    "axios": "^1.6.8",
+    "classnames": "^2.5.1",
     "date-fns": "^3.6.0",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-day-picker": "^8.10.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -36,5 +40,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^15.0.1",
+    "@testing-library/user-event": "^13.5.0",
+    "msw": "^2.2.13"
   }
 }
