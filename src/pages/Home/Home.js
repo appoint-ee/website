@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import { isEmpty } from 'lodash';
 
-import { styled } from '@mui/styles';
+import { styled } from '@mui/system';
 
 import InfoCard from '../../components/cards/Info';
 import PickerCard from '../../components/cards/Picker';

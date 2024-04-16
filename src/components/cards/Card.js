@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { styled } from '@mui/styles';
+import { styled } from '@mui/system';
 
 import cardStyles from '../../styles/components/cards/cardStyles';
 

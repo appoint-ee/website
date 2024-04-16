@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { styled } from '@mui/styles';
+import { styled } from '@mui/system';
 
 import Card from './Card';
 

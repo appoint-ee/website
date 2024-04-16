@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import classNames from 'classnames';
 
-import { styled } from '@mui/styles';
+import { styled } from '@mui/system';
 
 import Card from './Card';
 
