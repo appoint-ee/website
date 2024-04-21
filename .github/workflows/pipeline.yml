@@ -16,4 +16,4 @@ jobs:
     steps:
     - name: Deploy to DigitalOcean Kubernetes
       run: |
-        kubectl apply -f appoint-ee/website/deployment.yaml
+        kubectl apply -f deployment.yaml
