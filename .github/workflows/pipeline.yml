@@ -14,21 +14,15 @@ jobs:
 
 
     steps:
-    - name: Install kubectl
-      uses: digitalocean/action-doctl@v2
-      with:
-        token: ${{ secrets.K8S_ACCESS_TOKEN }}
-        args: kubectl version --client
-    - name: Configure kubectl
-      run: |
-        mkdir -p ~/.kube
-        echo "$KUBE_CONFIG" > ~/.kube/config
-    - name: Copy deployment.yaml
-      run: ls
-
-    - name: Copy deployment.yaml
-      run: pwd
-
     - name: Deploy to DigitalOcean Kubernetes
       run: |
-        kubectl apply -f $HOME/deployment.yaml
+        ls
+    - name: Deploy to DigitalOcean Kubernetes
+      run: |
+        pwd
+    - name: Deploy to DigitalOcean Kubernetes
+      run: |
+        ls -lart
+    - name: Deploy to DigitalOcean Kubernetes
+      run: |
+        kubectl apply -f .github/workflows/deployment.yaml
