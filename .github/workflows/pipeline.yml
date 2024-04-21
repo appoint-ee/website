@@ -16,4 +16,10 @@ jobs:
     steps:
     - name: Deploy to DigitalOcean Kubernetes
       run: |
+        ls
+    - name: Deploy to DigitalOcean Kubernetes
+      run: |
+        pwd
+    - name: Deploy to DigitalOcean Kubernetes
+      run: |
         kubectl apply -f deployment.yaml
