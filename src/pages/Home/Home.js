@@ -23,6 +23,9 @@ const PickerBody = styled('div')(homeStyles.pickerBody);
 const Seperator = styled('div')(homeStyles.seperator);
 // #endregion
 
+const googleApiAuthUrl = 'https://oauth2.googleapis.com/token';
+const appointeeApiUrl = 'http://localhost:5074';
+
 const Home = () => {
     // #region State definition
     const { user, setUser } = useContext(UserContext);
@@ -35,7 +38,6 @@ const Home = () => {
     useEffect(() => {
         if (code) {
             const fetchData = async () => {
-                const url = 'https://oauth2.googleapis.com/token';
                 const params = new URLSearchParams({
                     client_id: process.env.REACT_APP_GOOGLE_API_CLIENT_ID,  
                     client_secret: process.env.REACT_APP_GOOGLE_API_CLIENT_SECRET,  
@@ -45,7 +47,7 @@ const Home = () => {
                 });
 
                 try {
-                    const response = await fetch(url, {
+                    const response = await fetch(googleApiAuthUrl, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
@@ -53,24 +55,40 @@ const Home = () => {
                         body: params.toString(),
                     });
 
-                    if (response.ok) {
-                        const data = await response.json();
+                    if (!response.ok) {
+                        throw new Error('An error was encountered during the authentication process!');
+                    }
+
+                    const authResponseData = await response.json();
                         
-                        console.log(data);
-                        
-                        // Here you might want to update your context or perform other actions
+                    if(authResponseData.access_token){
+                        const headers = {
+                            'accept': 'text/plain',
+                            'Authorization': 'Bearer ' + authResponseData.access_token
+                        };
+
+                        const response = await fetch(appointeeApiUrl + '/people', {
+                            method: 'GET',
+                            headers: headers
+                        });
+
+                        if (!response.ok) {
+                            throw new Error('An error was encountered during the process of populating user data!');
+                        }
+
+                        const userInfoData = await response.json();
+
                         setUser({
-                            name: 'John Doe',
-                            address: 'İstanbul',
-                            email: 'j@j.com',
-                            phone: '555 444 33 22',
+                            name: userInfoData.name,
+                            address: userInfoData.address,
+                            email: userInfoData.emailAddress,
+                            phone: userInfoData.phoneNumber,
+                            avatar: userInfoData.photoUrl,
                             description: 'Müthiş bir girişim fikriniz mi var?\nGelin konuşalım. \nUzman ekibimiz ile neden\nbatacağınızı anlatalım.',
                         })
-                    } else {
-                        console.error('HTTP error', response.status, await response.text());
                     }
                 } catch (error) {
-                    console.error('Fetch error:', error);
+                    console.error(error);
                 }
             };
 
@@ -107,7 +125,10 @@ const redirectToGoogleAuth = () => {
     window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?&` +
         `client_id=${process.env.REACT_APP_GOOGLE_API_CLIENT_ID}&` +
         `response_type=code&` +
-        `scope=https://www.googleapis.com/auth/calendar+https://www.googleapis.com/auth/calendar.events+https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/user.birthday.read&` +
+        `scope=https://www.googleapis.com/auth/calendar+https://www.googleapis.com/auth/calendar.events+` +
+        `https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email+` +
+        `https://www.googleapis.com/auth/user.addresses.read+` +
+        `https://www.googleapis.com/auth/user.phonenumbers.read&` +
         `access_type=offline&` +
         `include_granted_scopes=true&` +
         "redirect_uri=http://localhost:3000";
