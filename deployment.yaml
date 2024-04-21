@@ -18,7 +18,7 @@ spec:
       - name: appointee-web
         image: registry.digitalocean.com/docr-appointee/web:latest
         ports:
-        - containerPort: 80
+        - containerPort: 3000
         resources:
           requests:
             memory: "512Mi"
@@ -31,8 +31,9 @@ kind: Service
 metadata:
   name: appointee-web-service
 spec:
+  selector:
+    app.kubernetes.io/name: appointee-web
   ports:
-    - name: http
-      protocol: TCP
-      port: 80
-      targetPort: 80
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
