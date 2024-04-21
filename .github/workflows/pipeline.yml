@@ -39,6 +39,9 @@ jobs:
       run: |
         mkdir -p ~/.kube
         echo "$KUBE_CONFIG" > ~/.kube/config
+    - name: Copy deployment.yaml
+      run: cp deployment.yaml $HOME/deployment.yaml
+
     - name: Deploy to DigitalOcean Kubernetes
       run: |
-        kubectl apply -f deployment.yaml
+        kubectl apply -f $HOME/deployment.yaml
