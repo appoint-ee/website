@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appointee-web
+  labels:
+    app: appointee-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: appointee-web
+  template:
+    metadata:
+      labels:
+        app: appointee-web
+    spec:
+      containers:
+      - name: appointee-web
+        image: registry.digitalocean.com/docr-appointee/web:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: appointee-web-service
+spec:
+  selector:
+    app: appointee-web
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
