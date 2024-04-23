@@ -15,11 +15,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag web:$(date +%s)
+      run: docker build . --file Dockerfile --tag web
     - name: Log in to DigitalOcean Container Registry
       run: echo "${{ secrets.DIGITALOCEAN_REGISTRY_TOKEN }}" | docker login -u ${{ secrets.DIGITALOCEAN_REGISTRY_USERNAME }} --password-stdin registry.digitalocean.com
-    - name: Push Docker image to DigitalOcean Container Registry
-      run: docker pull registry.digitalocean.com/docr-appointee/web
     - name: Push Docker image to DigitalOcean Container Registry
       run: docker push registry.digitalocean.com/docr-appointee/web
 
