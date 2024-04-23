@@ -25,6 +25,7 @@ const Seperator = styled('div')(homeStyles.seperator);
 
 const googleApiAuthUrl = 'https://oauth2.googleapis.com/token';
 const appointeeApiUrl = 'http://localhost:5074';
+const webUrl = window.location.origin;
 
 const Home = () => {
     // #region State definition
@@ -43,7 +44,7 @@ const Home = () => {
                     client_secret: process.env.REACT_APP_GOOGLE_API_CLIENT_SECRET,  
                     code: code,
                     grant_type: 'authorization_code',
-                    redirect_uri: 'http://localhost:3000',
+                    redirect_uri: webUrl,
                 });
 
                 try {
@@ -131,7 +132,7 @@ const redirectToGoogleAuth = () => {
         `https://www.googleapis.com/auth/user.phonenumbers.read&` +
         `access_type=offline&` +
         `include_granted_scopes=true&` +
-        "redirect_uri=http://localhost:3000";
+        `redirect_uri=${webUrl}`;
 }
 
 export default Home;
