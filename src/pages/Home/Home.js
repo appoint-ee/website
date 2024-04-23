@@ -24,7 +24,7 @@ const Seperator = styled('div')(homeStyles.seperator);
 // #endregion
 
 const googleApiAuthUrl = 'https://oauth2.googleapis.com/token';
-const appointeeApiUrl = 'http://localhost:5074';
+const appointeeApiUrl = process.env.REACT_APP_API_URL 
 const webUrl = window.location.origin;
 
 const Home = () => {
