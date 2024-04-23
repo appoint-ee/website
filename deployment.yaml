@@ -19,6 +19,11 @@ spec:
         image: registry.digitalocean.com/docr-appointee/web:latest
         ports:
         - containerPort: 3000
+        env:
+        - name: REACT_APP_GOOGLE_API_CLIENT_ID
+          value: "***"
+        - name: REACT_APP_GOOGLE_API_CLIENT_SECRET
+          value: "***"
         # resources:
         #   requests:
         #     memory: "64Mi"
