@@ -21,9 +21,15 @@ spec:
         - containerPort: 3000
         env:
         - name: REACT_APP_GOOGLE_API_CLIENT_ID
-          value: "***"
+          valueFrom:
+            secretKeyRef:
+              name: appointee-web-secrets
+              key: ReactAppGoogleApiClientId
         - name: REACT_APP_GOOGLE_API_CLIENT_SECRET
-          value: "***"
+          valueFrom:
+            secretKeyRef:
+              name: appointee-web-secrets
+              key: ReactAppGoogleApiClientSecret
         # resources:
         #   requests:
         #     memory: "64Mi"
