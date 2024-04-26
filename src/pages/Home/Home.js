@@ -9,7 +9,11 @@ import InfoCard from '../../components/cards/Info';
 import PickerCard from '../../components/cards/Picker';
 import SlotsCard from '../../components/cards/Slots';
 
+import BookingForm from '../../components/home/BookingForm';
+
 import { UserContext } from '../../contexts/UserContext';
+
+import { url, googleApi } from '../../constants/environment';
 
 import homeStyles from '../../styles/pages/homeStyles';
 
@@ -23,16 +27,23 @@ const PickerBody = styled('div')(homeStyles.pickerBody);
 const Seperator = styled('div')(homeStyles.seperator);
 // #endregion
 
-const googleApiAuthUrl = 'https://oauth2.googleapis.com/token';
-const appointeeApiUrl = process.env.REACT_APP_API_URL 
-const webUrl = window.location.origin;
-
 const Home = () => {
     // #region State definition
+    const location = useLocation();
+
     const { user, setUser } = useContext(UserContext);
     // #endregion
     
-    const location = useLocation();
+    // #region Component definition
+    const startProps = {
+        onClick: () => redirectToGoogleAuth()
+    };
+    const pickerBodyProps = {
+        className: isEmpty(user) ? 'initial' : 'open',
+    };
+    // #endregion
+
+    // #region Life cycle    
     const searchParams = new URLSearchParams(location.search);
     const code = searchParams.get('code');
     
@@ -40,15 +51,14 @@ const Home = () => {
         if (code) {
             const fetchData = async () => {
                 const params = new URLSearchParams({
-                    client_id: process.env.REACT_APP_GOOGLE_API_CLIENT_ID,  
-                    client_secret: process.env.REACT_APP_GOOGLE_API_CLIENT_SECRET,  
-                    code: code,
+                    ...googleApi,
                     grant_type: 'authorization_code',
-                    redirect_uri: webUrl,
+                    redirect_uri: url.web,
+                    code,
                 });
 
                 try {
-                    const response = await fetch(googleApiAuthUrl, {
+                    const response = await fetch(url.googleApiAuth, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
@@ -62,13 +72,13 @@ const Home = () => {
 
                     const authResponseData = await response.json();
                         
-                    if(authResponseData.access_token){
+                    if(authResponseData.access_token) {
                         const headers = {
                             'accept': 'text/plain',
                             'Authorization': 'Bearer ' + authResponseData.access_token
                         };
 
-                        const response = await fetch(appointeeApiUrl + '/people', {
+                        const response = await fetch(url.appointeeApi + '/people', {
                             method: 'GET',
                             headers: headers
                         });
@@ -86,24 +96,32 @@ const Home = () => {
                             phone: userInfoData.phoneNumber,
                             avatar: userInfoData.photoUrl,
                             description: 'Müthiş bir girişim fikriniz mi var?\nGelin konuşalım. \nUzman ekibimiz ile neden\nbatacağınızı anlatalım.',
-                        })
+                        });
                     }
-                } catch (error) {
+                }
+                catch (error) {
                     console.error(error);
                 }
             };
 
             fetchData();
         }
-    }, [code]);
-    
-    // #region Component definition
-    const startProps = {
-        onClick: () => redirectToGoogleAuth()
-    };
-    const pickerBodyProps = {
-        className: isEmpty(user) ? 'initial' : 'open',
-    };
+    }, [code, setUser]); 
+    // #endregion
+
+    // #region Utils
+    const redirectToGoogleAuth = () => {
+        window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?&` +
+            `client_id=${googleApi.client_id}&` +
+            `response_type=code&` +
+            `scope=https://www.googleapis.com/auth/calendar+https://www.googleapis.com/auth/calendar.events+` +
+            `https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email+` +
+            `https://www.googleapis.com/auth/user.addresses.read+` +
+            `https://www.googleapis.com/auth/user.phonenumbers.read&` +
+            `access_type=offline&` +
+            `include_granted_scopes=true&` +
+            `redirect_uri=${url.web}`;
+    }
     // #endregion
 
     return (
@@ -118,21 +136,9 @@ const Home = () => {
                 <Seperator />
                 <SlotsCard />
             </PickerBody>
+            <BookingForm />
         </MainContainer>
     );
-}
-
-const redirectToGoogleAuth = () => {
-    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?&` +
-        `client_id=${process.env.REACT_APP_GOOGLE_API_CLIENT_ID}&` +
-        `response_type=code&` +
-        `scope=https://www.googleapis.com/auth/calendar+https://www.googleapis.com/auth/calendar.events+` +
-        `https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email+` +
-        `https://www.googleapis.com/auth/user.addresses.read+` +
-        `https://www.googleapis.com/auth/user.phonenumbers.read&` +
-        `access_type=offline&` +
-        `include_granted_scopes=true&` +
-        `redirect_uri=${webUrl}`;
 }
 
 export default Home;
