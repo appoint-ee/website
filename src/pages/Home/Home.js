@@ -12,6 +12,7 @@ import SlotsCard from '../../components/cards/Slots';
 import BookingForm from '../../components/home/BookingForm';
 
 import { UserContext } from '../../contexts/UserContext';
+import { BookingProvider } from '../../contexts/BookingContext';
 
 import { url, googleApi } from '../../constants/environment';
 
@@ -39,11 +40,12 @@ const Home = () => {
         onClick: () => redirectToGoogleAuth()
     };
     const pickerBodyProps = {
-        className: isEmpty(user) ? 'initial' : 'open',
+        // className: isEmpty(user) ? 'initial' : 'open',
+        className: 'open',
     };
     // #endregion
 
-    // #region Life cycle    
+    // #region Life cycle
     const searchParams = new URLSearchParams(location.search);
     const code = searchParams.get('code');
     
@@ -125,19 +127,21 @@ const Home = () => {
     // #endregion
 
     return (
-        <MainContainer>
-            <Title>
-                Hemen kendi takvmini yarat ve appointment almaya <Start {...startProps}>başla!</Start>
-            </Title>
-            <PickerBody {...pickerBodyProps}>
-                <InfoCard />
-                <Seperator />
-                <PickerCard />
-                <Seperator />
-                <SlotsCard />
-            </PickerBody>
-            <BookingForm />
-        </MainContainer>
+        <BookingProvider>
+            <MainContainer>
+                <Title>
+                    Hemen kendi takvmini yarat ve appointment almaya <Start {...startProps}>başla!</Start>
+                </Title>
+                <PickerBody {...pickerBodyProps}>
+                    <InfoCard />
+                    <Seperator />
+                    <PickerCard />
+                    <Seperator />
+                    <SlotsCard />
+                </PickerBody>
+                <BookingForm />
+            </MainContainer>
+        </BookingProvider>
     );
 }
 

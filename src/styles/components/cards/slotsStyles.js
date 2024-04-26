@@ -20,6 +20,7 @@ const style = {
 
         '&:hover': {
             width: '26%',
+            cursor: 'pointer',
             boxShadow: '7px 8px 12px 3px black',
         },
         '&.selected': {
@@ -29,22 +30,6 @@ const style = {
         '&.booked': {
             color: '#ffffff80',
             background: '#80808073',
-        },
-    },
-    next: {
-        color: 'white',
-        width: '40%',
-        border: '1px #3e38384a solid',
-        padding: '15px',
-        boxShadow: '5px 5px 20px 0px black',
-        textAlign: 'center',
-        borderRadius: '10px',
-        backgroundColor: '#a52a2a94',
-        fontSize: '20px',
-
-        '&:hover': {
-            width: '41%',
-            boxShadow: '7px 8px 12px 3px black',
         },
     },
 };
