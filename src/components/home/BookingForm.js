@@ -29,7 +29,6 @@ const BookingForm = ({
         PaperProps: {
             sx: {
                 width: "30%",
-                padding: "20px",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -40,18 +39,40 @@ const BookingForm = ({
 
     return (
         <SwipeableDrawer {...drawerProps}>
+            <div style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                backgroundColor: "#a52a2a94",
+                borderBottom: "1px solid rgba(62, 56, 56, 0.29)",
+                boxShadow: "#00000096 0px 4px 10px 1px",
+            }}>
+                <span 
+                    style={{
+                        fontSize: "36px",
+                        margin: "20px 0px 20px 0px",
+                        color: "rgb(255 255 255 / 64%)",
+                    }}
+                >
+                    Son Adım
+                </span>
+            </div>
             <div>
-                <span>Son Adım</span>
-                <hr />Detail
+                Detail
             </div>
             <div>
                 Form
             </div>
-            <div style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-            }}>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    padding: "20px",
+                    borderTop: "1px solid rgba(62, 56, 56, 0.29)",
+                    boxShadow: "rgba(0, 0, 0, 0.59) 0px 0px 10px 1px",
+                }}
+            >
                 <CancelButton />
                 <PrimaryButton>
                     Save
