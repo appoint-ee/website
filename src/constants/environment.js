@@ -1,7 +1,7 @@
 
 export const url = {
     googleApiAuth: 'https://oauth2.googleapis.com/token',
-    appointeeApi: 'http://localhost:5074',
+    appointeeApi: process.env.REACT_APP_API_URL,
     web: window.location.origin,
 };
 
