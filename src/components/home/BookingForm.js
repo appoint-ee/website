@@ -1,17 +1,33 @@
 import React, { useContext } from 'react';
 
 import { SwipeableDrawer } from '@mui/material';
+import TextField from '@mui/material/TextField';
 import { styled } from '@mui/system';
 
 import { BookingContext } from '../../contexts/BookingContext';
+import { UserContext } from '../../contexts/UserContext';
 
 import { CancelButton, PrimaryButton } from '../form/Button';
+
+import avatar from '../../assets/images/avatar.png';
+
+import bookingFormStyles from '../../styles/components/home/bookingFormStyles';
+
+// #region Styled Components
+const Header = styled('div')(bookingFormStyles.header);
+const Title = styled('span')(bookingFormStyles.title);
+const Body = styled('fiv')(bookingFormStyles.body);
+const Detail = styled('div')(bookingFormStyles.detail);
+const Form = styled('div')(bookingFormStyles.form);
+const Footer = styled('div')(bookingFormStyles.footer);
+// #endregion
 
 const BookingForm = ({
     handlerOnClose,
 }) => {
     // #region State definition
-    const { state, functions } = useContext(BookingContext);
+    const { user } = useContext(UserContext);
+    const { state, functions } = useContext(BookingContext);    
     // #endregion
 
     // #region Component definition
@@ -39,45 +55,49 @@ const BookingForm = ({
 
     return (
         <SwipeableDrawer {...drawerProps}>
-            <div style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                backgroundColor: "#a52a2a94",
-                borderBottom: "1px solid rgba(62, 56, 56, 0.29)",
-                boxShadow: "#00000096 0px 4px 10px 1px",
-            }}>
-                <span 
-                    style={{
-                        fontSize: "36px",
-                        margin: "20px 0px 20px 0px",
-                        color: "rgb(255 255 255 / 64%)",
-                    }}
-                >
+            <Header>
+                <Title>
                     Son Adım
-                </span>
-            </div>
-            <div>
-                Detail
-            </div>
-            <div>
-                Form
-            </div>
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    padding: "20px",
-                    borderTop: "1px solid rgba(62, 56, 56, 0.29)",
-                    boxShadow: "rgba(0, 0, 0, 0.59) 0px 0px 10px 1px",
-                }}
-            >
+                </Title>
+            </Header>
+            <Body>
+                <Detail>
+                    <img src={user.avatar ?? avatar} alt="avatar" />
+                    <ul>
+                        <li>
+                            Jhon Doe
+                        </li>
+                        <li>
+                            24.04.2024 10:00
+                        </li>
+                        <li>
+                            Konum
+                        </li>
+                    </ul>
+                </Detail>
+                <Form> 
+                    <TextField
+                        id="outlined-basic"
+                        label="Outlined"
+                        variant="outlined"
+                        fullWidth
+                    />
+                    <TextField
+                        id="outlined-multiline-flexible"
+                        label="Multiline"
+                        multiline
+                        fullWidth
+                        rows={4}
+                        maxRows={4}
+                    />
+                </Form>
+            </Body>
+            <Footer>
                 <CancelButton />
                 <PrimaryButton>
                     Save
                 </PrimaryButton>
-            </div>
+            </Footer>
         </SwipeableDrawer>
     );
 }

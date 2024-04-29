@@ -40,8 +40,7 @@ const Home = () => {
         onClick: () => redirectToGoogleAuth()
     };
     const pickerBodyProps = {
-        // className: isEmpty(user) ? 'initial' : 'open',
-        className: 'open',
+        className: isEmpty(user) ? 'initial' : 'open',
     };
     // #endregion
 
