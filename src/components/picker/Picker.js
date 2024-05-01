@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
 
+import { styled } from '@mui/system';
+
 import { DayPicker } from 'react-day-picker';
 import { format } from 'date-fns';
 
 import 'react-day-picker/dist/style.css';
+
+// #region Styled Components
+const StyledPicker = styled(DayPicker)({
+    "& .rdp-button:hover:not([disabled]):not(.rdp-day_selected)": {
+        color: "black",
+    },
+});
+// #endregion
 
 const Picker = () => {
     const [selected, setSelected] = useState(null);
@@ -13,10 +23,8 @@ const Picker = () => {
     //     footer = <p>You picked {format(selected, 'PP')}.</p>;
     // }
 
-    const bookedStyle = { border: '2px solid currentColor' };
-
     return (
-        <DayPicker
+        <StyledPicker
             // selected={new Date()}
             onDayClick={day => console.log(day)}
             showOutsideDays 
@@ -32,11 +40,11 @@ const Picker = () => {
             // locale="tr"
             // month={new Date()}
             modifiers={{
-                // selected: [
-                //   {
-                //     dayOfWeek: [1],
-                //   },
-                // ],
+                selected: [
+                    {
+                        dayOfWeek: [1],
+                    },
+                ],
                 disabled: [
                     {
                         dayOfWeek: [2],
@@ -54,8 +62,14 @@ const Picker = () => {
                 ]
             }}
             modifiersStyles={{
-                booked: bookedStyle,
-            }}            
+                booked: {
+                    backgroundColor: '#80808073',
+                    color: '#ffffff80',
+                },
+                selected: {
+                    backgroundColor: '#a52a2a94',
+                },
+            }} 
             styles={{
                 head_cell: {
                     width: "60px",
@@ -65,6 +79,12 @@ const Picker = () => {
                 },
                 day: {
                     margin: "auto",
+                },
+                dropdown_month: {
+                    color: "red",
+                },
+                dropdown: {
+                    color: "blue",
                 },
             }}
         />

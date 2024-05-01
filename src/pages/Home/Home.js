@@ -20,7 +20,7 @@ const Title = styled('p')(homeStyles.title);
 const Start = styled('span')(homeStyles.start);
 
 const PickerBody = styled('div')(homeStyles.pickerBody);
-const Seperator = styled('div')(homeStyles.seperator);
+const Separator = styled('div')(homeStyles.separator);
 // #endregion
 
 const Home = () => {
@@ -94,9 +94,9 @@ const Home = () => {
             </Title>
             <PickerBody {...pickerBodyProps}>
                 <InfoCard />
-                <Seperator />
+                <Separator />
                 <PickerCard />
-                <Seperator />
+                <Separator />
                 <SlotsCard />
             </PickerBody>
         </MainContainer>

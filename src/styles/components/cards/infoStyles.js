@@ -1,25 +1,47 @@
+import {fontWeight} from "@mui/system";
 
 const style = {
-    header: {
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
+    cardContainer: {
+        width: '28%',
+    },
+    cardPosition: {
+        position: "relative",
+        marginLeft: "40px",
+        marginTop: "40px",
+        width: "100%",
     },
     avatar: {
-        width: '20%',
+        width: '80px',
+        borderRadius: '50px',
+        position: 'absolute',
+        top: '-40px',
+        left: '-40px',
+    },
+    name: {
+        fontSize: '28px',
+        fontWeight: '600',
+        color: '#00000096',
+        textShadow: '2px 2px 15px black',
+    },
+    separator: {
+        width: '100%',
+        border: '1px solid #00000096',
     },
     detail: {
-        listStyleType: 'none',
-        '& li': {
+        padding: '10px 30px 10px 30px',
+        width: '75%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+
+        '& span': {
             marginTop: '5px',
-            fontSize: '15px',
-            fontWeight: '600',
+            fontSize: '20px',
             color: '#00000096',
             textShadow: '2px 2px 15px black',
         },
     },
     description: {
-        marginTop: '50px',
         textAlign: 'center',
 
         '& p': {

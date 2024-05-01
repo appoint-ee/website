@@ -11,9 +11,11 @@ import avatar from '../../assets/images/avatar.png';
 import infoStyles from '../../styles/components/cards/infoStyles';
 
 // #region Styled Components
-const Header = styled('div')(infoStyles.header);
+const CardContainer = styled('div')(infoStyles.cardContainer);
 const Avatar = styled('img')(infoStyles.avatar);
-const Detail = styled('ul')(infoStyles.detail);
+const Name = styled('span')(infoStyles.name);
+const Separator = styled('hr')(infoStyles.separator);
+const Detail = styled('div')(infoStyles.detail);
 const Description = styled('div')(infoStyles.description);
 // #endregion
 
@@ -23,30 +25,31 @@ const Info = () => {
     // #endregion
 
     return (
-        <Card>
-            <Header>
+        <CardContainer>
+            <Card style={infoStyles.cardPosition}>
                 <Avatar src={user.avatar ?? avatar} alt="avatar" />
+                <Name>
+                    {user.name}
+                </Name>
+                <Separator />
+                <Description>
+                    <p>
+                        {user.description}
+                    </p>
+                </Description>
                 <Detail>
-                    <li>
-                        {user.name}
-                    </li>
-                    <li>
+                    <span>
                         {user.address}
-                    </li>
-                    <li>
+                    </span>
+                    <span>
                         {user.email}
-                    </li>
-                    <li>
+                    </span>
+                    <span>
                         {user.phone}
-                    </li>
+                    </span>
                 </Detail>
-            </Header>
-            <Description>
-                <p>
-                    {user.description}
-                </p>
-            </Description>
-        </Card>
+            </Card>
+        </CardContainer>
     );
 }
 

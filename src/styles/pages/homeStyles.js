@@ -41,7 +41,7 @@ const style = {
             height: 'calc(100% - 55px)',
         },
     },
-    seperator: {
+    separator: {
         width: '8%',
     },
 };
