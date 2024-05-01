@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 
 import classNames from 'classnames';
 
 import { styled } from '@mui/system';
 
+import { BookingContext } from '../../contexts/BookingContext';
+
+import { PrimaryButton } from '../form/Button';
 import Card from './Card';
 
 import slotsStyles from '../../styles/components/cards/slotsStyles';
@@ -11,11 +14,12 @@ import slotsStyles from '../../styles/components/cards/slotsStyles';
 // #region Styled Components
 const Boxes = styled('div')(slotsStyles.boxes);
 const Box = styled('div')(slotsStyles.box);
-const Next = styled('button')(slotsStyles.next);
 // #endregion
 
 const Slots = () => {
     // #region State definition
+    const { state, functions } = useContext(BookingContext);
+
     const availableSlots = [
         {
             start: '08:10',
@@ -37,6 +41,15 @@ const Slots = () => {
         },
     ];
     // #endregion
+    
+    // #region Component definition
+    const nextButtonProps = {
+        onClick: () => {
+            // TODO: Validate is a slot selected or not.
+            functions.setIsFormOpen(true);
+        }
+    };
+    // #endregion
 
     return (
         <Card>
@@ -55,9 +68,9 @@ const Slots = () => {
                     ))
                 }
             </Boxes>
-            <Next>
+            <PrimaryButton {...nextButtonProps}>
                 Next
-            </Next>
+            </PrimaryButton>
         </Card>
     );
 }
