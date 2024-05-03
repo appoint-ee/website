@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { SwipeableDrawer } from '@mui/material';
+import { SwipeableDrawer, Grid } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/system';
 
@@ -16,15 +16,13 @@ import bookingFormStyles from '../../styles/components/home/bookingFormStyles';
 // #region Styled Components
 const Header = styled('div')(bookingFormStyles.header);
 const Title = styled('span')(bookingFormStyles.title);
-const Body = styled('fiv')(bookingFormStyles.body);
+const Body = styled('div')(bookingFormStyles.body);
 const Detail = styled('div')(bookingFormStyles.detail);
 const Form = styled('div')(bookingFormStyles.form);
 const Footer = styled('div')(bookingFormStyles.footer);
 // #endregion
 
-const BookingForm = ({
-    handlerOnClose,
-}) => {
+const BookingForm = () => {
     // #region State definition
     const { user } = useContext(UserContext);
     const { state, functions } = useContext(BookingContext);    
@@ -38,10 +36,7 @@ const BookingForm = ({
         disableDiscovery: iOS,
         anchor: "right",
         open: state.isFormOpen,
-        onClose: () => {
-            functions.setIsFormOpen(false);
-            handlerOnClose();
-        },
+        onClose: () => functions.setIsFormOpen(false),
         PaperProps: {
             sx: {
                 width: "30%",
@@ -50,6 +45,19 @@ const BookingForm = ({
                 justifyContent: "space-between",
             },
         },
+    };
+    const txtTitleProps = {
+        id: "txtTitle",
+        label: "Title",
+        variant: "outlined",
+        fullWidth: true,
+    };
+    const txtDescriptionProps = {
+        id: "txtDescription",
+        label: "Description",
+        multiline: true,
+        fullWidth: true,
+        rows: 4,
     };
     // #endregion
 
@@ -75,21 +83,15 @@ const BookingForm = ({
                         </li>
                     </ul>
                 </Detail>
-                <Form> 
-                    <TextField
-                        id="outlined-basic"
-                        label="Outlined"
-                        variant="outlined"
-                        fullWidth
-                    />
-                    <TextField
-                        id="outlined-multiline-flexible"
-                        label="Multiline"
-                        multiline
-                        fullWidth
-                        rows={4}
-                        maxRows={4}
-                    />
+                <Form>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <TextField {...txtTitleProps} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField {...txtDescriptionProps} />
+                        </Grid>
+                    </Grid>
                 </Form>
             </Body>
             <Footer>

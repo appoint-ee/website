@@ -9,11 +9,11 @@ import '../assets/styles/App.css';
 
 const Root = () => (
   <React.StrictMode>
-    <UserProvider>
-      <BrowserRouter>
-          <Routing />
-      </BrowserRouter>
-    </UserProvider>
+    <BrowserRouter>
+      <UserProvider>
+        <Routing />
+      </UserProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

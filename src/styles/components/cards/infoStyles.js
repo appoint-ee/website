@@ -1,4 +1,3 @@
-import {fontWeight} from "@mui/system";
 
 const style = {
     cardContainer: {
@@ -21,7 +20,6 @@ const style = {
         fontSize: '28px',
         fontWeight: '600',
         color: '#00000096',
-        textShadow: '2px 2px 15px black',
     },
     separator: {
         width: '100%',

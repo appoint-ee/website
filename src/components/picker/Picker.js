@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { styled } from '@mui/system';
 
 import { DayPicker } from 'react-day-picker';
-import { format } from 'date-fns';
 
 import 'react-day-picker/dist/style.css';
 
@@ -15,79 +14,72 @@ const StyledPicker = styled(DayPicker)({
 });
 // #endregion
 
-const Picker = () => {
-    const [selected, setSelected] = useState(null);
-
+const Picker = ({ modifiers, ...props }) => {
+    // #region Components definition
     // let footer = <p>Please pick a day.</p>;
     // if (selected) {
     //     footer = <p>You picked {format(selected, 'PP')}.</p>;
     // }
 
+    const currentYear = new Date().getFullYear();
+    const datePickerProps = {
+        // onDayClick: day => console.log(day),
+        showOutsideDays: true,
+        // fixedWeeks: true,
+        // numberOfMonths: 2,
+        // pagedNavigation: true,
+        captionLayout: "dropdown",
+        fromYear: currentYear,
+        toYear: currentYear + 3,
+        weekStartsOn: 1,
+        // fixedWeeks: false,
+        // showWeekNumber: tre,
+        // locale: "tr",
+        // month: new Date(),
+        modifiers: {
+            disabled: [
+                {
+                    dayOfWeek: [2],
+                },
+            ],
+            booked: [
+                {
+                    dayOfWeek: [3],
+                },
+            ],
+        },
+        modifiersStyles: {
+            booked: {
+                backgroundColor: '#80808073',
+                color: '#ffffff80',
+            },
+            selected: {
+                backgroundColor: '#a52a2a94',
+            },
+        },
+        styles: {
+            head_cell: {
+                width: "60px",
+            },
+            table: {
+                maxWidth: "none",
+            },
+            day: {
+                margin: "auto",
+            },
+            dropdown_month: {
+                color: "red",
+            },
+            dropdown: {
+                color: "blue",
+            },
+        },
+        ...props,
+    };
+    // #endregion
+
     return (
-        <StyledPicker
-            // selected={new Date()}
-            onDayClick={day => console.log(day)}
-            showOutsideDays 
-            // fixedWeeks
-            // numberOfMonths={2}
-            // pagedNavigation
-            captionLayout="dropdown"
-            fromYear={2015}
-            toYear={2025}
-            weekStartsOn={1}
-            // fixedWeeks={false}
-            // showWeekNumber
-            // locale="tr"
-            // month={new Date()}
-            modifiers={{
-                selected: [
-                    {
-                        dayOfWeek: [1],
-                    },
-                ],
-                disabled: [
-                    {
-                        dayOfWeek: [2],
-                    },
-                ],
-                // outside: [
-                //   {
-                //     dayOfWeek: [3],
-                //   },
-                // ],
-                booked: [
-                    {
-                        dayOfWeek: [3],
-                    }
-                ]
-            }}
-            modifiersStyles={{
-                booked: {
-                    backgroundColor: '#80808073',
-                    color: '#ffffff80',
-                },
-                selected: {
-                    backgroundColor: '#a52a2a94',
-                },
-            }} 
-            styles={{
-                head_cell: {
-                    width: "60px",
-                },
-                table: {
-                    maxWidth: "none",
-                },
-                day: {
-                    margin: "auto",
-                },
-                dropdown_month: {
-                    color: "red",
-                },
-                dropdown: {
-                    color: "blue",
-                },
-            }}
-        />
+        <StyledPicker {...datePickerProps} />
     );
 }
 

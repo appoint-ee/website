@@ -29,6 +29,7 @@ const style = {
 
         "& img": {
             width: "35%",
+            borderRadius: "50px",
         },
         "& ul": {
             listStyleType: "none",
@@ -42,10 +43,6 @@ const style = {
     },
     form: {
         padding: "0px 20px 0px 20px",
-
-        "& input": {
-            marginBottom: "20px",
-        },
     },
     footer: {
         display: "flex",
