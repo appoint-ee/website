@@ -1,6 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import usePeopleApi from '../api/people';
+import { authorize as authorizeGoogle } from '../api/google';
+
 import { url, googleApi } from '../constants/environment';
 
 const UserContext = createContext();
@@ -10,6 +13,8 @@ const UserProvider = ({ children }) => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const code = searchParams.get('code');
+
+    const peopleApi = usePeopleApi();
 
     const [user, setUser] = useState({});
     // #endregion
@@ -26,6 +31,7 @@ const UserProvider = ({ children }) => {
             localStorage.setItem("user", JSON.stringify(user));
         }
     }, [user]);
+    
     useEffect(() => {
         if (code) {
             const fetchData = async () => {
@@ -34,58 +40,24 @@ const UserProvider = ({ children }) => {
                     grant_type: 'authorization_code',
                     redirect_uri: url.web,
                     code,
-                });
+                });                
+                const { access_token } = await authorizeGoogle(params);
 
-                try {
-                    const response = await fetch(url.googleApiAuth, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: params.toString(),
+                if (access_token) {
+                    const { photoUrl, ...userInfoData } = await peopleApi.get(access_token);
+
+                    setUser({
+                        ...userInfoData,
+                        avatar: photoUrl,
+                        accessToken: access_token,
+                        description: 'Müthiş bir girişim fikriniz mi var?\nGelin konuşalım. \nUzman ekibimiz ile neden\nbatacağınızı anlatalım.',
                     });
-
-                    if (!response.ok) {
-                        throw new Error('An error was encountered during the authentication process!');
-                    }
-
-                    const authResponseData = await response.json();
-                        
-                    if(authResponseData.access_token) {
-                        const headers = {
-                            'accept': 'text/plain',
-                            'Authorization': 'Bearer ' + authResponseData.access_token
-                        };
-
-                        const response = await fetch(url.appointeeApi + '/people', {
-                            method: 'GET',
-                            headers: headers
-                        });
-
-                        if (!response.ok) {
-                            throw new Error('An error was encountered during the process of populating user data!');
-                        }
-
-                        const userInfoData = await response.json();
-
-                        setUser({
-                            name: userInfoData.name,
-                            address: userInfoData.address,
-                            email: userInfoData.emailAddress,
-                            phone: userInfoData.phoneNumber,
-                            avatar: userInfoData.photoUrl,
-                            description: 'Müthiş bir girişim fikriniz mi var?\nGelin konuşalım. \nUzman ekibimiz ile neden\nbatacağınızı anlatalım.',
-                        });
-                    }
-                }
-                catch (error) {
-                    console.error(error);
                 }
             };
 
             fetchData();
         }
-    }, [code, setUser]); 
+    }, [code]); 
     // #endregion
 
     return (
