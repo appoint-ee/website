@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { styled } from '@mui/system';
 
 import { DayPicker } from 'react-day-picker';
+
+import { DaySlotsContext } from "../../contexts/DaySlotsContext";
 
 import 'react-day-picker/dist/style.css';
 
@@ -21,9 +23,14 @@ const Picker = ({ modifiers, ...props }) => {
     //     footer = <p>You picked {format(selected, 'PP')}.</p>;
     // }
 
+    const { daySlots } = useContext(DaySlotsContext);
+
+    let disabledDaySlots = daySlots.filter(daySlot => daySlot.status === "Not Available");
+    let disabledDates = disabledDaySlots.map(daySlot => new Date(daySlot.dateTime));
+    
     const currentYear = new Date().getFullYear();
     const datePickerProps = {
-        // onDayClick: day => console.log(day),
+        onDayClick: day => console.log(day),
         showOutsideDays: true,
         // fixedWeeks: true,
         // numberOfMonths: 2,
@@ -36,18 +43,7 @@ const Picker = ({ modifiers, ...props }) => {
         // showWeekNumber: tre,
         // locale: "tr",
         // month: new Date(),
-        modifiers: {
-            disabled: [
-                {
-                    dayOfWeek: [2],
-                },
-            ],
-            booked: [
-                {
-                    dayOfWeek: [3],
-                },
-            ],
-        },
+        disabled: disabledDates,
         modifiersStyles: {
             booked: {
                 backgroundColor: '#80808073',

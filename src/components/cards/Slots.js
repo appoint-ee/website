@@ -11,6 +11,8 @@ import Card from './Card';
 
 import slotsStyles from '../../styles/components/cards/slotsStyles';
 
+import { TimeSlotsContext } from "../../contexts/TimeSlotsContext";
+
 // #region Styled Components
 const Boxes = styled('div')(slotsStyles.boxes);
 const Box = styled('div')(slotsStyles.box);
@@ -19,28 +21,16 @@ const Box = styled('div')(slotsStyles.box);
 const Slots = () => {
     // #region State definition
     const { state, functions } = useContext(BookingContext);
-
-    const availableSlots = [
-        {
-            start: '08:10',
-            end: '08:20',
-            isBooked: false,
-            isSelected: false,
-        },
-        {
-            start: '08:20',
-            end: '08:30',
-            isBooked: false,
-            isSelected: true,
-        },
-        {
-            start: '08:10',
-            end: '08:20',
-            isBooked: true,
-            isSelected: false,
-        },
-    ];
     // #endregion
+
+    const { timeSlots } = useContext(TimeSlotsContext);
+    
+    function formatTime(time) {
+        const date = new Date(time);
+        const hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+        const minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+        return `${hours}:${minutes}`;
+    }
     
     // #region Component definition
     const nextButtonProps = {
@@ -55,17 +45,22 @@ const Slots = () => {
         <Card>
             <Boxes>
                 {
-                    availableSlots.map((slot, sIndex) => (
-                        <Box
-                            key={sIndex}
-                            className={classNames({
-                                booked: slot.isBooked,
-                                selected: slot.isSelected,
-                            })}
-                        >
-                            {slot.start} - {slot.end}
-                        </Box>
-                    ))
+                    timeSlots ? (
+                        timeSlots.map((slot, sIndex) => (
+                            <Box
+                                key={sIndex}
+                                className={classNames({
+                                    booked: slot.status === "booked",
+                                    selected: slot.status === "available",
+                                })}
+                            >
+                                {formatTime(slot.startTime)}
+
+                            </Box>
+                        ))
+                    ): (
+                        <div>No time slots available</div>
+                    )
                 }
             </Boxes>
             <PrimaryButton {...nextButtonProps}>
