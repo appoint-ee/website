@@ -1,44 +1,32 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 
-import { UserContext } from "./UserContext";
+import { format } from 'date-fns';
 
-import { url } from "../constants/environment";
+import useSlotApi from '../api/slot';
 
-import { common } from "../constants/common";
-
-import { format } from "date-fns";
+import { common } from '../constants/common';
 
 const TimeSlotsContext = createContext();
 
 const TimeSlotsProvider = ({ children }) => {
+    // #region State definition
+    const { getTime } = useSlotApi();
     const [timeSlots, setTimeSlots] = useState([]);
+    // #endregion
 
-    const {user} = useContext(UserContext);
-
-    const today = new Date(); // TODO: Get selected day from Picker.js
-    const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
-
+    // #region Life cycle
     useEffect(() => {
-        if (user.accessToken) {
-            const fetchData = async () => {
-                const timeSlotsData = await fetch(url.appointeeApi + `/slots/time?start=${format(today, common.dateFormat)}&end=${format(tomorrow, common.dateFormat)}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': 'Bearer ' + user.accessToken
-                    }
-                });
+        const fetchData = async () => {
+            const today = new Date(); // TODO: Get selected day from Picker.js
+            const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
 
-                if (!timeSlotsData.ok) {
-                    throw new Error('An error was encountered during the authentication process!');
-                }
-                
-                setTimeSlots(await timeSlotsData.json())
-            }
-
-            fetchData();
+            const apiResponse = await getTime(format(today, common.dateFormat), format(tomorrow, common.dateFormat));
+            setTimeSlots(apiResponse);
         }
-    }, [user]);
+
+        fetchData();
+    }, [getTime]);
+    // #endregion
     
     return (
         <TimeSlotsContext.Provider

@@ -4,8 +4,6 @@ import { styled } from '@mui/system';
 
 import Card from './Card';
 
-import useEventApi from '../../api/event';
-
 import { UserContext } from '../../contexts/UserContext';
 
 import avatar from '../../assets/images/avatar.png';
@@ -23,9 +21,8 @@ const Description = styled('div')(infoStyles.description);
 
 const Info = () => {
     // #region State definition
-    const { user } = useContext(UserContext);
-
-    const eventApi = useEventApi(); 
+    const { getOperableUser } = useContext(UserContext);
+    const user = getOperableUser();
     // #endregion
 
     return (
@@ -51,13 +48,6 @@ const Info = () => {
                     <span>
                         {user.phoneNumber}
                     </span>
-                    <button
-                        type="button"
-                        onClick={async () => {
-                            const events = await eventApi.getAll();
-                            alert(JSON.stringify(events));
-                        }}
-                    >Test events</button>
                 </Detail>
             </Card>
         </CardContainer>

@@ -2,6 +2,7 @@
 export const url = {
     googleApiAuth: 'https://oauth2.googleapis.com/token',
     appointeeApi: process.env.REACT_APP_API_URL,
+    appointeeWeb: process.env.REACT_APP_WEBSITE_URL,
     web: window.location.origin,
 };
 

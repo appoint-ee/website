@@ -1,5 +1,7 @@
 import { useContext } from 'react';
 
+import axios from 'axios';
+
 import { UserContext } from '../contexts/UserContext';
 
 import { prepareApiResponse } from '../utils/helpers/api';
@@ -17,12 +19,13 @@ const useApi = () => {
         endPoint: url.appointeeApi + "/slots",
     };
 
-    const getTime = (startDate, endDate) => fetch(
-        `${base.endPoint}/time?start=${startDate}&endDate=${endDate}`,
-        {
-            method: "GET",
-            headers: base.headers,
-        })
+    const getTime = (startDate, endDate) => axios
+        .get(
+            `${base.endPoint}/time?start=${startDate}&endDate=${endDate}`,
+            {
+                headers: base.headers,
+            }
+        )
         .then(prepareApiResponse);
 
     return {

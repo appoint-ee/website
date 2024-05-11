@@ -36,6 +36,7 @@ const BookingForm = () => {
         disableDiscovery: iOS,
         anchor: "right",
         open: state.isFormOpen,
+        onOpen: (...args) => console.log("onOpen", args),
         onClose: () => functions.setIsFormOpen(false),
         PaperProps: {
             sx: {
@@ -58,6 +59,13 @@ const BookingForm = () => {
         multiline: true,
         fullWidth: true,
         rows: 4,
+    };
+    const cancelButtonProps = {
+        onClick: () => functions.setIsFormOpen(false),
+    };
+    const saveButtonProps = {
+        children: "Save",
+        onClick: () => functions.saveForm(),
     };
     // #endregion
 
@@ -95,10 +103,8 @@ const BookingForm = () => {
                 </Form>
             </Body>
             <Footer>
-                <CancelButton />
-                <PrimaryButton>
-                    Save
-                </PrimaryButton>
+                <CancelButton {...cancelButtonProps} />
+                <PrimaryButton {...saveButtonProps} />
             </Footer>
         </SwipeableDrawer>
     );

@@ -21,7 +21,7 @@ const style = {
         cursor: 'pointer',
         textDecoration: 'underline'
     },
-    pickerBody: {
+    body: {
         width: '80%',
         overflow: 'hidden',
 

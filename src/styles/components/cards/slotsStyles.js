@@ -3,6 +3,7 @@ const style = {
     boxes: {
         display: 'flex',
         flexDirection: 'row',
+        flexWrap: 'wrap',
         justifyContent: 'space-between',
         width: '100%',
         marginBottom: '50px',
@@ -13,6 +14,7 @@ const style = {
         borderRadius: '10px',
         textAlign: 'center',
         padding: '10px',
+        margin: '10px',
         backgroundColor: 'white',
         color: 'black',
         textShadow: '2px 2px 15px black',

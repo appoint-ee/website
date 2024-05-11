@@ -13,6 +13,8 @@ import slotsStyles from '../../styles/components/cards/slotsStyles';
 
 import { TimeSlotsContext } from "../../contexts/TimeSlotsContext";
 
+import { formatTime } from '../../utils/tools/date';
+
 // #region Styled Components
 const Boxes = styled('div')(slotsStyles.boxes);
 const Box = styled('div')(slotsStyles.box);
@@ -21,23 +23,15 @@ const Box = styled('div')(slotsStyles.box);
 const Slots = () => {
     // #region State definition
     const { state, functions } = useContext(BookingContext);
-    // #endregion
-
     const { timeSlots } = useContext(TimeSlotsContext);
-    
-    function formatTime(time) {
-        const date = new Date(time);
-        const hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
-        const minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
-        return `${hours}:${minutes}`;
-    }
+    // #endregion
     
     // #region Component definition
     const nextButtonProps = {
         onClick: () => {
             // TODO: Validate is a slot selected or not.
             functions.setIsFormOpen(true);
-        }
+        },
     };
     // #endregion
 
@@ -45,7 +39,8 @@ const Slots = () => {
         <Card>
             <Boxes>
                 {
-                    timeSlots ? (
+                    timeSlots
+                    ? (
                         timeSlots.map((slot, sIndex) => (
                             <Box
                                 key={sIndex}
@@ -55,10 +50,10 @@ const Slots = () => {
                                 })}
                             >
                                 {formatTime(slot.startTime)}
-
                             </Box>
                         ))
-                    ): (
+                    )
+                    : (
                         <div>No time slots available</div>
                     )
                 }
