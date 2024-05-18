@@ -1,5 +1,7 @@
 import { prepareApiResponse } from '../utils/helpers/api';
 
+import axios from 'axios';
+
 import { url } from '../constants/environment';
 
 const useApi = () => {   
@@ -10,15 +12,16 @@ const useApi = () => {
         endPoint: url.appointeeApi + "/people",
     };
 
-    const get = accessToken => fetch(
-        base.endPoint,
-        {
-            method: "GET",
-            headers: {
-                ...base.headers,
-                Authorization: "Bearer " + accessToken,
-            },
-        })
+    const get = accessToken => axios
+        .get(
+            base.endPoint,
+            {
+                headers: {
+                    ...base.headers,
+                    Authorization: "Bearer " + accessToken,
+                },
+            }
+        )
         .then(prepareApiResponse);
 
     return {

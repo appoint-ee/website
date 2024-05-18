@@ -5,8 +5,8 @@ const style = {
         borderRadius: 29,
         color: 'white',
         padding: '20px',
-        // height: '80%',
         width: '28%',
+        position: 'relative',
 
         display: 'flex',
         flexDirection: 'column',

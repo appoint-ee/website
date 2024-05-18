@@ -9,7 +9,8 @@ import { prepareApiResponse } from '../utils/helpers/api';
 import { url } from '../constants/environment';
 
 const useApi = () => {   
-    const { user } = useContext(UserContext);
+    const { getOperableUser } = useContext(UserContext);
+    const user = getOperableUser();
 
     const base = {
         headers: {
@@ -19,9 +20,17 @@ const useApi = () => {
         endPoint: url.appointeeApi + "/slots",
     };
 
+    const getDay = (startDate, endDate) => axios
+        .get(
+            `${base.endPoint}/day?start=${startDate}&end=${endDate}`,
+            {
+                headers: base.headers,
+            }
+        )
+        .then(prepareApiResponse);
     const getTime = (startDate, endDate) => axios
         .get(
-            `${base.endPoint}/time?start=${startDate}&endDate=${endDate}`,
+            `${base.endPoint}/time?start=${startDate}&end=${endDate}`,
             {
                 headers: base.headers,
             }
@@ -29,6 +38,7 @@ const useApi = () => {
         .then(prepareApiResponse);
 
     return {
+        getDay,
         getTime,
     };
 }

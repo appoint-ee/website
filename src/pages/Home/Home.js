@@ -52,9 +52,9 @@ const Home = () => {
                     </Title>
                 )
             }                    
-            <DaySlotsProvider>
-                <TimeSlotsProvider>
-                    <BookingProvider>
+            <BookingProvider>
+                <DaySlotsProvider>
+                    <TimeSlotsProvider>
                         <Body {...bodyProps}>
                             <InfoCard />
                             <Separator />
@@ -63,9 +63,9 @@ const Home = () => {
                             <SlotsCard />
                         </Body>
                         <BookingForm />
-                    </BookingProvider>
-                </TimeSlotsProvider>
-            </DaySlotsProvider>
+                    </TimeSlotsProvider>
+                </DaySlotsProvider>
+            </BookingProvider>
         </MainContainer>
     );
 }

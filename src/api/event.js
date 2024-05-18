@@ -1,5 +1,7 @@
 import { useContext } from 'react';
 
+import axios from 'axios';
+
 import { UserContext } from '../contexts/UserContext';
 
 import { prepareApiResponse } from '../utils/helpers/api';
@@ -17,13 +19,13 @@ const useApi = () => {
         endPoint: url.appointeeApi + "/events",
     };
 
-    const getAll = () => fetch(
-        base.endPoint,
-        {
-            method: "GET",
-            headers: base.headers,
-        })
-        .then(prepareApiResponse);
+    const getAll = () => axios
+        .get(
+            base.endPoint,
+            {
+                headers: base.headers,
+            }
+        ).then(prepareApiResponse);
 
     return {
         getAll,

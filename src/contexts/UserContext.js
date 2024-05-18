@@ -33,7 +33,7 @@ const UserProvider = ({ children }) => {
         }
 
         const domainName = window.location.hostname.replace("." + url.appointeeWeb, "");
-        if (!isEmpty(domainName)) {
+        if (domainName !== url.appointeeWeb) {
             // TODO: getUserByUserName
             // TODO: getUserByUserName sonucu null ise anasayfaya yönlendir.
             const newAppointeeUser = {
@@ -56,7 +56,6 @@ const UserProvider = ({ children }) => {
     
     useEffect(() => {
         if (!!code) {
-            console.log("code", code);
             const fetchData = async () => {
                 const params = new URLSearchParams({
                     ...googleApi,

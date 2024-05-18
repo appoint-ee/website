@@ -7,6 +7,7 @@ import { styled } from '@mui/system';
 import { BookingContext } from '../../contexts/BookingContext';
 
 import { PrimaryButton } from '../form/Button';
+import Loading from './Loading';
 import Card from './Card';
 
 import slotsStyles from '../../styles/components/cards/slotsStyles';
@@ -23,7 +24,7 @@ const Box = styled('div')(slotsStyles.box);
 const Slots = () => {
     // #region State definition
     const { state, functions } = useContext(BookingContext);
-    const { timeSlots } = useContext(TimeSlotsContext);
+    const { isLoading, timeSlots } = useContext(TimeSlotsContext);
     // #endregion
     
     // #region Component definition
@@ -46,7 +47,7 @@ const Slots = () => {
                                 key={sIndex}
                                 className={classNames({
                                     booked: slot.status === "booked",
-                                    selected: slot.status === "available",
+                                    // selected: slot.status === "available",
                                 })}
                             >
                                 {formatTime(slot.startTime)}
@@ -61,6 +62,7 @@ const Slots = () => {
             <PrimaryButton {...nextButtonProps}>
                 Next
             </PrimaryButton>
+            {isLoading && <Loading />}
         </Card>
     );
 }

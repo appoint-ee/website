@@ -1,8 +1,9 @@
 
 export const prepareApiResponse = response => {
-    if (!response.ok) {
-        throw new Error('An error was encountered during the process of populating user data!');
+    if (response.status !== 200) {
+        // throw new Error('An error was encountered during the process of populating user data!');
+        return {};
     }
 
-    return response.json();
+    return response.data;
 };
