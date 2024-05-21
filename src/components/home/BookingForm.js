@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 
+import { format } from 'date-fns';
+
 import { SwipeableDrawer, Grid } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/system';
@@ -9,9 +11,12 @@ import { UserContext } from '../../contexts/UserContext';
 
 import { CancelButton, PrimaryButton } from '../form/Button';
 
-import avatar from '../../assets/images/avatar.png';
+import dateConstants from '../../constants/date';
+
+import { formatTime } from '../../utils/tools/date';
 
 import bookingFormStyles from '../../styles/components/home/bookingFormStyles';
+import avatar from '../../assets/images/avatar.png';
 
 // #region Styled Components
 const Header = styled('div')(bookingFormStyles.header);
@@ -24,13 +29,14 @@ const Footer = styled('div')(bookingFormStyles.footer);
 
 const BookingForm = () => {
     // #region State definition
-    const { user } = useContext(UserContext);
+    const { getOperableUser } = useContext(UserContext);
     const { state, functions } = useContext(BookingContext);    
     // #endregion
 
     // #region Component definition
-    const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const user = getOperableUser();
 
+    const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
     const drawerProps = {
         disableBackdropTransition: !iOS,
         disableDiscovery: iOS,
@@ -65,7 +71,7 @@ const BookingForm = () => {
     };
     const saveButtonProps = {
         children: "Save",
-        onClick: () => functions.saveForm(),
+        onClick: functions.saveForm,
     };
     // #endregion
 
@@ -73,7 +79,7 @@ const BookingForm = () => {
         <SwipeableDrawer {...drawerProps}>
             <Header>
                 <Title>
-                    Son Adım
+                    Last step
                 </Title>
             </Header>
             <Body>
@@ -81,13 +87,13 @@ const BookingForm = () => {
                     <img src={user.avatar ?? avatar} alt="avatar" />
                     <ul>
                         <li>
-                            Jhon Doe
+                            {user.name}
                         </li>
                         <li>
-                            24.04.2024 10:00
+                            {state.selectedDate && format(state.selectedDate, dateConstants.format)} {formatTime(state.selectedSlot)}
                         </li>
                         <li>
-                            Konum
+                            {user.emailAddress} & {user.phoneNumber}
                         </li>
                     </ul>
                 </Detail>

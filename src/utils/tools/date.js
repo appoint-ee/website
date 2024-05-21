@@ -1,6 +1,9 @@
 
-
 export const formatTime = time => {
+    if (!time) {
+        return null;
+    }
+
     const date = new Date(time);
     const hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
     const minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();

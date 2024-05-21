@@ -6,9 +6,9 @@ const BookingProvider = ({
     children,
 }) => {
     // #region State definition
+    const [selectedSlot, setSlot] = useState(null);
     const [selectedDate, setDate] = useState(null);
     const [selectedMonth, setMonth] = useState(new Date());
-    const [selectedSlot, setSelectedSlot] = useState(null);
     const [form, setForm] = useState({});
     const [isFormOpen, setIsFormOpen] = useState(false);
     // #endregion
@@ -17,6 +17,11 @@ const BookingProvider = ({
     const onMonthChange = newSelectedMonth => {
         setMonth(newSelectedMonth);
         setDate(null);
+        setSlot(null);
+    };
+    const onDateChange = newSelectedDate => {
+        setDate(newSelectedDate);
+        setSlot(null);
     };
     const saveForm = () => {
 
@@ -27,18 +32,18 @@ const BookingProvider = ({
         <BookingContext.Provider
             value={{
                 state: {
+                    selectedSlot,
                     selectedMonth,
                     selectedDate,
-                    selectedSlot,
                     form,
                     isFormOpen,
                 },
                 functions: {
-                    setDate,
-                    setSelectedSlot,
+                    setSlot,
                     setIsFormOpen,
                     setForm,
 
+                    onDateChange,
                     onMonthChange,
                     saveForm,
                 },

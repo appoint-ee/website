@@ -4,7 +4,7 @@ const style = {
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         width: '100%',
         marginBottom: '50px',
     },

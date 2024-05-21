@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import classNames from 'classnames';
+import { isEmpty } from 'lodash';
 
 import { styled } from '@mui/system';
 
@@ -28,11 +29,15 @@ const Slots = () => {
     // #endregion
     
     // #region Component definition
+    const isSlotNotSelected = isEmpty(state.selectedSlot);
+    
     const nextButtonProps = {
-        onClick: () => {
-            // TODO: Validate is a slot selected or not.
-            functions.setIsFormOpen(true);
-        },
+        onClick: () => functions.setIsFormOpen(true),
+        disabled: isSlotNotSelected,
+        title: isSlotNotSelected ? "Please select a day" : undefined,
+        className: classNames({
+            disabled: !isSlotNotSelected,
+        }),
     };
     // #endregion
 
@@ -40,22 +45,28 @@ const Slots = () => {
         <Card>
             <Boxes>
                 {
-                    timeSlots
+                    isEmpty(timeSlots)
                     ? (
-                        timeSlots.map((slot, sIndex) => (
-                            <Box
-                                key={sIndex}
-                                className={classNames({
-                                    booked: slot.status === "booked",
-                                    // selected: slot.status === "available",
-                                })}
-                            >
-                                {formatTime(slot.startTime)}
-                            </Box>
-                        ))
+                        <div>
+                            No time slots available
+                        </div>
                     )
                     : (
-                        <div>No time slots available</div>
+                        timeSlots
+                            .filter(slot => slot.status === "booked" || slot.status === "available")
+                            .map((slot, sIndex) => (
+                                <Box
+                                    key={sIndex}
+                                    className={classNames({
+                                        booked: slot.status === "booked",
+                                        // selected: slot.status === "available",
+                                        selected: slot.startTime === state.selectedSlot,
+                                    })}
+                                    onClick={() => functions.setSlot(slot.startTime)}
+                                >
+                                    {formatTime(slot.startTime)}
+                                </Box>
+                            ))
                     )
                 }
             </Boxes>

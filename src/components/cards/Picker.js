@@ -35,7 +35,7 @@ const PickerCard = () => {
     const datePickerProps = {
         onMonthChange: functions.onMonthChange,
         month: state.selectedMonth,
-        onDayClick: functions.setDate,
+        onDayClick: functions.onDateChange,
         selected: state.selectedDate,
         showOutsideDays: false,
         captionLayout: "dropdown",
