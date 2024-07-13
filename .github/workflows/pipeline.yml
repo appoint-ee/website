@@ -5,17 +5,17 @@ on:
     branches: [ "development" ]
   pull_request:
     branches: [ "development" ]
+  workflow_dispatch:
 
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - name: Log in to DigitalOcean Container Registry
       run: echo "${{ secrets.DIGITALOCEAN_REGISTRY_TOKEN }}" | docker login -u ${{ secrets.DIGITALOCEAN_REGISTRY_USERNAME }} --password-stdin registry.digitalocean.com
-    - name: Push Docker image to DigitalOcean Container Registry
+    - name: Pull Docker image from DigitalOcean Container Registry
       run: docker pull registry.digitalocean.com/docr-appointee/web
     - uses: actions/checkout@v3
     - name: Build the Docker image
