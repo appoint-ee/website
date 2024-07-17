@@ -20,17 +20,17 @@ const useApi = () => {
         endPoint: url.appointeeApi + "/slots",
     };
 
-    const getDay = (startDate, endDate) => axios
+    const getDay = (userName, startDate, endDate) => axios
         .get(
-            `${base.endPoint}/day?start=${startDate}&end=${endDate}`,
+            `${base.endPoint}/day?userName=${userName}&start=${startDate}&end=${endDate}`,
             {
                 headers: base.headers,
             }
         )
         .then(prepareApiResponse);
-    const getTime = (startDate, endDate) => axios
+    const getTime = (userName, startDate, endDate) => axios
         .get(
-            `${base.endPoint}/time?start=${startDate}&end=${endDate}`,
+            `${base.endPoint}/time?userName=${userName}&start=${startDate}&end=${endDate}`,
             {
                 headers: base.headers,
             }
