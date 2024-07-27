@@ -24,7 +24,7 @@ const DaySlotsProvider = ({ children }) => {
     // #endregion
     
     // #region Life cycle
-    const { accessToken } = getOperableUser();
+    const { accessToken, userName } = getOperableUser();
 
     useEffect(() => {
         if (!isEmpty(accessToken)) {
@@ -37,7 +37,7 @@ const DaySlotsProvider = ({ children }) => {
             const lastDay = new Date(selectedYear, selectedMonth + 1, 0);
     
             slotApi
-                .getDay(format(firstDay, dateConstants.format), format(lastDay, dateConstants.format))
+                .getDay(userName, format(firstDay, dateConstants.format), format(lastDay, dateConstants.format))
                 .then(response => {
                     setDaySlots(response);
                     setIsLoading(false);

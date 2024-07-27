@@ -43,6 +43,7 @@ const UserProvider = ({ children }) => {
                 address: "Tallinn",
                 emailAddress: "rchil@appoint.ee",
                 phoneNumber: "555 444 33 22",
+                userName: domainName
             };
             setAppointeeUser(newAppointeeUser);
         }

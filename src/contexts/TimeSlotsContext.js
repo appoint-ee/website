@@ -24,7 +24,7 @@ const TimeSlotsProvider = ({ children }) => {
     // #endregion
 
     // #region Life cycle
-    const { accessToken } = getOperableUser();
+    const { accessToken, userName } = getOperableUser();
 
     useEffect(() => {
         if (!isEmpty(accessToken)) {
@@ -33,7 +33,7 @@ const TimeSlotsProvider = ({ children }) => {
 
                 const tomorrow = new Date(state.selectedDate.getFullYear(), state.selectedDate.getMonth(), state.selectedDate.getDate() + 1);
                 slotApi
-                    .getTime(format(state.selectedDate, dateConstants.format), format(tomorrow, dateConstants.format))
+                    .getTime(userName, format(state.selectedDate, dateConstants.format), format(tomorrow, dateConstants.format))
                     .then(response => {
                         setTimeSlots(response);
                         setIsLoading(false);
