@@ -17,23 +17,21 @@ const TimeSlotsProvider = ({ children }) => {
     const slotApi = useSlotApi();
 
     const { state } = useContext(BookingContext);
-    const { getOperableUser } = useContext(UserContext);
+    const { appointeeUser } = useContext(UserContext);
 
     const [ isLoading, setIsLoading ] = useState(false);
     const [ timeSlots, setTimeSlots ] = useState([]);
     // #endregion
 
     // #region Life cycle
-    const { accessToken, userName } = getOperableUser();
-
     useEffect(() => {
-        if (!isEmpty(accessToken)) {
+        if (!isEmpty(appointeeUser)) {
             if (state.selectedDate) {
                 setIsLoading(true);
 
                 const tomorrow = new Date(state.selectedDate.getFullYear(), state.selectedDate.getMonth(), state.selectedDate.getDate() + 1);
                 slotApi
-                    .getTime(userName, format(state.selectedDate, dateConstants.format), format(tomorrow, dateConstants.format))
+                    .getTime(appointeeUser.userName, format(state.selectedDate, dateConstants.format), format(tomorrow, dateConstants.format))
                     .then(response => {
                         setTimeSlots(response);
                         setIsLoading(false);
@@ -43,7 +41,8 @@ const TimeSlotsProvider = ({ children }) => {
                 setTimeSlots([]);
             }
         }
-    }, [accessToken, state.selectedDate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [JSON.stringify(appointeeUser), state.selectedDate]);
     // #endregion
     
     return (

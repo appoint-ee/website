@@ -21,32 +21,31 @@ const Description = styled('div')(infoStyles.description);
 
 const Info = () => {
     // #region State definition
-    const { getOperableUser } = useContext(UserContext);
-    const user = getOperableUser();
+    const { appointeeUser } = useContext(UserContext);
     // #endregion
 
     return (
         <CardContainer>
             <Card style={infoStyles.cardPosition}>
-                <Avatar src={user.avatar ?? avatar} alt="avatar" />
+                <Avatar src={appointeeUser.avatar ?? avatar} alt="avatar" />
                 <Name>
-                    {user.name}
+                    {appointeeUser.name}
                 </Name>
                 <Separator />
                 <Description>
                     <p>
-                        {user.description}
+                        {appointeeUser.description}
                     </p>
                 </Description>
                 <Detail>
                     <span>
-                        {user.address}
+                        {appointeeUser.address}
                     </span>
                     <span>
-                        {user.emailAddress}
+                        {appointeeUser.emailAddress}
                     </span>
                     <span>
-                        {user.phoneNumber}
+                        {appointeeUser.phoneNumber}
                     </span>
                 </Detail>
             </Card>

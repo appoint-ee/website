@@ -29,13 +29,11 @@ const Footer = styled('div')(bookingFormStyles.footer);
 
 const BookingForm = () => {
     // #region State definition
-    const { getOperableUser } = useContext(UserContext);
+    const { appointeeUser } = useContext(UserContext);
     const { state, functions } = useContext(BookingContext);    
     // #endregion
 
     // #region Component definition
-    const user = getOperableUser();
-
     const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
     const drawerProps = {
         disableBackdropTransition: !iOS,
@@ -84,16 +82,16 @@ const BookingForm = () => {
             </Header>
             <Body>
                 <Detail>
-                    <img src={user.avatar ?? avatar} alt="avatar" />
+                    <img src={appointeeUser.avatar ?? avatar} alt="avatar" />
                     <ul>
                         <li>
-                            {user.name}
+                            {appointeeUser.name}
                         </li>
                         <li>
                             {state.selectedDate && format(state.selectedDate, dateConstants.format)} {formatTime(state.selectedSlot)}
                         </li>
                         <li>
-                            {user.emailAddress} & {user.phoneNumber}
+                            {appointeeUser.emailAddress} & {appointeeUser.phoneNumber}
                         </li>
                     </ul>
                 </Detail>

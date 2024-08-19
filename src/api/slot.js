@@ -9,8 +9,7 @@ import { prepareApiResponse } from '../utils/helpers/api';
 import { url } from '../constants/environment';
 
 const useApi = () => {   
-    const { getOperableUser } = useContext(UserContext);
-    const user = getOperableUser();
+    const { user } = useContext(UserContext);
 
     const base = {
         headers: {

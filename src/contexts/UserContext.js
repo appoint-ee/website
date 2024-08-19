@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { createContext, useCallback, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-
-import { isEmpty } from 'lodash';
 
 import usePeopleApi from '../api/people';
 import { authorize as authorizeGoogle } from '../api/google';
@@ -11,6 +9,8 @@ import { url, googleApi } from '../constants/environment';
 
 const UserContext = createContext();
 
+//  user -> logged in user
+//  appointeeUser -> Domain user
 const UserProvider = ({ children }) => {
     // #region State definition
     const location = useLocation();
@@ -83,17 +83,12 @@ const UserProvider = ({ children }) => {
     }, [code]); 
     // #endregion
 
-    // #region Callbacks
-    const getOperableUser = useCallback(() => appointeeUser ?? user, [appointeeUser, user]);
-    // #endregion
-
     return (
         <UserContext.Provider
             value={{
                 user, 
                 setUser,
                 appointeeUser,
-                getOperableUser,
             }}
         >
             {children}

@@ -39,33 +39,44 @@ const Home = () => {
         onClick: () => redirectToGoogleAuth(),
     };
     const bodyProps = {
-        className: isEmpty(appointeeUser ?? user) ? 'initial' : 'open',
+        className: isEmpty(user) ? 'initial' : 'open',
     };
     // #endregion
 
     return (
         <MainContainer>
             {
-                isEmpty(appointeeUser) && (
+                // If user is not logged in and not on home page, i.e., appointeeUser is empty,
+                isEmpty(user) && isEmpty(appointeeUser) && (
                     <Title>
                         Hemen kendi takvmini yarat ve appointment almaya <Start {...startProps}>başla!</Start>
                     </Title>
                 )
-            }                    
-            <BookingProvider>
-                <DaySlotsProvider>
-                    <TimeSlotsProvider>
-                        <Body {...bodyProps}>
-                            <InfoCard />
-                            <Separator />
-                            <PickerCard />
-                            <Separator />
-                            <SlotsCard />
-                        </Body>
-                        <BookingForm />
-                    </TimeSlotsProvider>
-                </DaySlotsProvider>
-            </BookingProvider>
+            }
+            {
+                // If user is not logged in and not on home page, i.e., appointeeUser is empty,
+                !isEmpty(user) && isEmpty(appointeeUser) && (
+                    "Slot oluşturma"
+                )
+            }
+            {
+                !isEmpty(appointeeUser) && (
+                    <BookingProvider>
+                        <DaySlotsProvider>
+                            <TimeSlotsProvider>
+                                <Body {...bodyProps}>
+                                    <InfoCard />
+                                    <Separator />
+                                    <PickerCard />
+                                    <Separator />
+                                    <SlotsCard />
+                                </Body>
+                                <BookingForm />
+                            </TimeSlotsProvider>
+                        </DaySlotsProvider>
+                    </BookingProvider>
+                )
+            }
         </MainContainer>
     );
 }

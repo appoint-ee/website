@@ -17,17 +17,16 @@ const DaySlotsProvider = ({ children }) => {
     const slotApi = useSlotApi();
 
     const { state } = useContext(BookingContext);
-    const { getOperableUser } = useContext(UserContext);
+    const { appointeeUser } = useContext(UserContext);
 
     const [ isLoading, setIsLoading ] = useState(false);
     const [ daySlots, setDaySlots ] = useState([]);
     // #endregion
     
     // #region Life cycle
-    const { accessToken, userName } = getOperableUser();
 
     useEffect(() => {
-        if (!isEmpty(accessToken)) {
+        if (!isEmpty(appointeeUser)) {
             setIsLoading(true);
 
             const selectedYear = state.selectedMonth.getFullYear();
@@ -37,13 +36,14 @@ const DaySlotsProvider = ({ children }) => {
             const lastDay = new Date(selectedYear, selectedMonth + 1, 0);
     
             slotApi
-                .getDay(userName, format(firstDay, dateConstants.format), format(lastDay, dateConstants.format))
+                .getDay(appointeeUser.userName, format(firstDay, dateConstants.format), format(lastDay, dateConstants.format))
                 .then(response => {
                     setDaySlots(response);
                     setIsLoading(false);
                 });
         }
-    }, [accessToken, state.selectedMonth]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [JSON.stringify(appointeeUser), state.selectedMonth, slotApi]);
     // #endregion
 
     return (
