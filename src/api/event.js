@@ -16,12 +16,12 @@ const useApi = () => {
             accept: "application/json",
             Authorization: "Bearer " + user.accessToken,
         },
-        endPoint: url.appointeeApi + "/events",
+        endPoint: url.appointeeApi + "/meetings",
     };
 
-    const getAll = () => axios
+    const getAll = (userName, startDate, endDate) => axios
         .get(
-            base.endPoint,
+            `${base.endPoint}/day?userName=${userName}&start=${startDate}&end=${endDate}`,
             {
                 headers: base.headers,
             }

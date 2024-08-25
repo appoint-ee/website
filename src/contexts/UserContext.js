@@ -24,7 +24,9 @@ const UserProvider = ({ children }) => {
     const searchParams = new URLSearchParams(location.search);
     const code = searchParams.get('code');
     // #endregion
-    
+
+    const domainName = window.location.hostname.replace("." + url.appointeeWeb, "");
+
     // #region Life cycle
     useEffect(() => {
         const localUser = localStorage.getItem("user");
@@ -32,7 +34,6 @@ const UserProvider = ({ children }) => {
             setUser(JSON.parse(localUser));
         }
 
-        const domainName = window.location.hostname.replace("." + url.appointeeWeb, "");
         if (domainName !== url.appointeeWeb) {
             // TODO: getUserByUserName
             // TODO: getUserByUserName sonucu null ise anasayfaya yönlendir.
@@ -67,7 +68,7 @@ const UserProvider = ({ children }) => {
                 const { access_token } = await authorizeGoogle(params);
 
                 if (access_token) {
-                    const { photoUrl, ...userInfoData } = await peopleApi.get(access_token);
+                    const { photoUrl, ...userInfoData } = await peopleApi.get(access_token, domainName);
 
                     setUser({
                         ...userInfoData,

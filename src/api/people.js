@@ -9,12 +9,12 @@ const useApi = () => {
         headers: {
             accept: "plain/text",
         },
-        endPoint: url.appointeeApi + "/people",
+        endPoint: url.appointeeApi + "/users",
     };
 
-    const get = accessToken => axios
+    const get = (accessToken, userName) => axios
         .get(
-            base.endPoint,
+            base.endPoint + "/" + userName,
             {
                 headers: {
                     ...base.headers,
