@@ -2,47 +2,55 @@ import landingPageImage from '../../assets/images/landingPage.jpg';
 
 const style = {
     mainContainer: {
-        width: '100%',
-        height: '100%',
+        width: "100%",
+        height: "100%",
         backgroundImage: `url(${landingPageImage})`,
-        backgroundSize: 'cover',
+        backgroundSize: "cover",
 
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
     },
     title: {
-        color: 'white',
-        fontSize: '48px',
-        textShadow: '3px 3px 10px black',
+        color: "white",
+        fontSize: "48px",
+        textShadow: "3px 3px 10px black",
     },
-    start: {
-        cursor: 'pointer',
-        textDecoration: 'underline'
+    action: {
+        cursor: "pointer",
+        textDecoration: "underline",
+        padding: "20px 30px",
+        backgroundColor: "rgb(165 42 42 / 54%)",
+        borderRadius: "80px",
     },
     body: {
-        width: '80%',
-        overflow: 'hidden',
+        width: "80%",
+        overflow: "hidden",
 
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
 
-        transitionProperty: 'height',
-        transitionDuration: '0.5s',
-        transitionTimingFunction: 'linear',
+        transitionProperty: "height",
+        transitionDuration: "0.5s",
+        transitionTimingFunction: "linear",
 
-        '&.initial': {
-            height: '0px',
+        "&.initial": {
+            height: "0px",
         },
-        '&.open': {
-            height: 'calc(100% - 55px)',
+        "&.open": {
+            height: "calc(100% - 55px)",
         },
     },
+    slotCreator: {
+        display: "flex",
+        justifyContent: "space-around",
+        alignItems: "stretch",
+    },
     separator: {
-        width: '8%',
+        width: "8%",
     },
 };
 

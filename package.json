@@ -47,6 +47,11 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^15.0.1",
     "@testing-library/user-event": "^13.5.0",
-    "msw": "^2.2.13"
+    "msw": "^2.4.9"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public/"
+    ]
   }
 }

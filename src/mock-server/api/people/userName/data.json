@@ -1,0 +1,10 @@
+{
+    "localhost": {
+        "avatar": "https://example.com/avatar.jpg",
+        "name": "Mock User",
+        "description": "Müthiş bir girişim fikriniz mi var?\nGelin konuşalım. \nUzman ekibimiz ile neden\nbatacağınızı anlatalım.",
+        "address": "123 Mock Street",
+        "emailAddress": "mockuser@example.com",
+        "phoneNumber": "555-555-5555"
+    }
+}

@@ -16,7 +16,7 @@ const UserProvider = ({ children }) => {
     const location = useLocation();
     const peopleApi = usePeopleApi();
 
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
     const [appointeeUser, setAppointeeUser] = useState(null);
     // #endregion
 
@@ -74,7 +74,6 @@ const UserProvider = ({ children }) => {
                         ...userInfoData,
                         avatar: photoUrl,
                         accessToken: access_token,
-                        description: 'Müthiş bir girişim fikriniz mi var?\nGelin konuşalım. \nUzman ekibimiz ile neden\nbatacağınızı anlatalım.',
                     });
                 }
             };
