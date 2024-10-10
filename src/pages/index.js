@@ -1,3 +1,2 @@
-export { default as NotFound } from './NotFound/NotFound';
-
-export { default as Home } from './Home/Home';
+export { default as NotFound } from './notFound/NotFound';
+export { default as Landing } from './landing/Landing';

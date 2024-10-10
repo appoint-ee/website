@@ -15,7 +15,7 @@ import dateConstants from '../../constants/date';
 
 import { formatTime } from '../../utils/tools/date';
 
-import bookingFormStyles from '../../styles/components/home/bookingFormStyles';
+import bookingFormStyles from '../../styles/components/landing/bookingFormStyles';
 import avatar from '../../assets/images/avatar.png';
 
 // #region Styled Components

@@ -1,10 +1,7 @@
-import landingPageImage from '../../assets/images/landingPage.jpg';
-
 const style = {
     mainContainer: {
         width: "100%",
         height: "100%",
-        backgroundImage: `url(${landingPageImage})`,
         backgroundSize: "cover",
 
         display: "flex",
@@ -12,19 +9,7 @@ const style = {
         justifyContent: "center",
         alignItems: "center",
     },
-    title: {
-        color: "white",
-        fontSize: "48px",
-        textShadow: "3px 3px 10px black",
-    },
-    action: {
-        cursor: "pointer",
-        textDecoration: "underline",
-        padding: "20px 30px",
-        backgroundColor: "rgb(165 42 42 / 54%)",
-        borderRadius: "80px",
-    },
-    body: {
+    slidingBody: {
         width: "80%",
         overflow: "hidden",
 
@@ -43,11 +28,6 @@ const style = {
         "&.open": {
             height: "calc(100% - 55px)",
         },
-    },
-    slotCreator: {
-        display: "flex",
-        justifyContent: "space-around",
-        alignItems: "stretch",
     },
     separator: {
         width: "8%",
