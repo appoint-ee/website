@@ -90,6 +90,27 @@ const style = {
         textAlign: "center",
         textDecoration: "underline",
     },
+    back: {
+        display: "flex",
+        alignItems: "center",
+        gap: "5px",
+        cursor: "pointer",
+    },
+    widget: {
+        display: "flex",
+        justifyContent: "center",
+        gap: "5px",
+    },
+    circle: {
+        width: "10px",
+        height: "10px",
+        borderRadius: "10px",
+        border: "1px solid #D9D9D9",
+
+        "&.active": {
+            backgroundColor: "#D9D9D9",
+        },
+    },
 };
 
 export default style;
